@@ -9,10 +9,12 @@ WormBeing::WormBeing() :
 
 WormBeing::~WormBeing()
 {
+
 }
 
 void WormBeing::spawn(b2World* world)
 {
+    world = world;
     dream = SimulationUtilities::dreams[(int)ofRandom(0, SimulationUtilities::dreams.size() - 1)];
     name = SimulationUtilities::names[(int)ofRandom(0, SimulationUtilities::names.size() - 1)];
     xSegmentDimension = 5.0f;
@@ -24,13 +26,12 @@ void WormBeing::spawn(b2World* world)
     lap = 0;
     interval = 5000.0f;
 
-
     debugFont.load("runescape_uf.ttf", 10);
     head.loadImage("smile.png");
 
     maxSpeed = ofRandom(0.09f, 1.0f);
 
-    hungerLevel = 100;
+    hungerLevel = 10;
 
     r = ofRandom(150, 180);
     g = ofRandom(230, 255);
@@ -69,12 +70,13 @@ void WormBeing::spawn(b2World* world)
         wormSegmentFixtureDef.density = 1.0f;
         wormSegmentFixtureDef.friction = 0.3f;
         wormSegment->CreateFixture(&wormSegmentFixtureDef);
-        wormSegments.push_back(wormSegment);
 
 
         jointB = wormSegment;
         assignJoints(jointA, jointB, world);
         jointA = wormSegment;
+        wormSegments.push_back(wormSegment);
+
     }
     wormHead->SetAngularDamping(10.0f);
     wormHead->SetUserData(this);
@@ -85,6 +87,9 @@ void WormBeing::update()
     
     randomBehavior();
     internalClock();
+    if (hungerLevel < 0) {
+        die();
+    }
 }
 
 void WormBeing::draw()
@@ -123,7 +128,7 @@ void WormBeing::assignJoints(b2Body* bodyA, b2Body* bodyB, b2World* world)
     jointDef.collideConnected = false;
     //jointDef.maxLength = 0.01f;
     jointDef.localAnchorA.Set(-0.15, -0.15);
-    jointDef.localAnchorB.Set(0.15 ,   0.15);
+    jointDef.localAnchorB.Set( 0.15,  0.15);
     joint = (b2RevoluteJoint*)world->CreateJoint(&jointDef);
 }
 
@@ -148,7 +153,7 @@ void WormBeing::internalClock()
 {
     if (ofGetElapsedTimeMillis() - lap > interval) {
         hungerLevel -= 10;
-        //std::cout << hungerLevel << std::endl;
+        std::cout << hungerLevel << std::endl;
         lap = ofGetElapsedTimeMillis();
     }
 }
@@ -157,4 +162,14 @@ void WormBeing::eat()
 {
     hungerLevel += 30;
     //std::cout << hungerLevel << std::endl;
+}
+
+void WormBeing::die()
+{
+    //delete this;
+    SimulationUtilities::addToDestroy(wormHead);
+    for (int i = 0; i < wormSegments.size(); i++) {
+        SimulationUtilities::addToDestroy(wormSegments[i]);
+    }
+    wormSegments.clear();
 }

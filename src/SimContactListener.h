@@ -29,7 +29,6 @@ public:
         //if ((void*)body1->GetUserData() == "food") { 
         //    std::cout << "food found" << std::endl;
         //}
-
     }
     void EndContact(b2Contact* contact) override
     {

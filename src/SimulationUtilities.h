@@ -12,10 +12,14 @@ public:
     static b2Vec2 pixelsToMeters(b2Vec2 position);
     static b2Vec2 metersToPixels(float xMeters, float yMeters);
     static b2Vec2 metersToPixels(b2Vec2 position);
+    static void addToDestroy(b2Body* body);
     static float pixelsToMeters(float pixels);
     static float metersToPixels(float meters);
     static vector<string>dreams;
     static vector<string>names;
+    static vector<b2Body*>toBeDestroyed;
+    static vector<b2Body*>toBeCreated;
+
  
 
 

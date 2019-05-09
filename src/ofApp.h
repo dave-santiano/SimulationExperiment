@@ -40,6 +40,9 @@ class ofApp : public ofBaseApp{
         ofShader shader;
         ofTexture texture;
 
+        bool deleteWorms;
+        bool initialSeed;
+
         SimContactListener contactListener;
         Food* food;
         bool debugMode;

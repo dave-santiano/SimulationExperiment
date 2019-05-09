@@ -21,6 +21,8 @@ public:
 
     void internalClock();
 
+    void die();
+
     b2Body* wormHead;
     b2PolygonShape dynamicBox;
     //b2RopeJointDef jointDef;
@@ -29,9 +31,11 @@ public:
     b2RevoluteJoint* joint;
     string dream;
     string name;
+    vector<b2Body*> wormSegments;
+
 
 private:
-
+    b2World* world;
     float lap;
     float interval;
 
@@ -59,7 +63,6 @@ private:
     float xCollision;
     float yCollision;
 
-    vector<b2Body*> wormSegments;
 
     b2Body* jointA;
     b2Body* jointB;

@@ -12,6 +12,7 @@ Plant::Plant()
 
 Plant::Plant(float x, float y, float _r, float _g, float _b, float length, b2World * world)
 {
+    world = world;
     xSegmentDimension = 15.0f;
     ySegmentDimension = 15.0f;
     debugFont.load("runescape_uf.ttf", 10);
@@ -70,6 +71,7 @@ Plant::Plant(float x, float y, float _r, float _g, float _b, float length, b2Wor
 
     plantHead = world->CreateBody(&plantHeadDef);
 
+    plant.push_back(plantHead);
     plantHeadFixtureDef.shape = &dynamicBox;
     plantHeadFixtureDef.filter.groupIndex = -1;
     plantHead->CreateFixture(&plantHeadFixtureDef);
@@ -150,6 +152,7 @@ void Plant::assignJoints(b2Body * bodyA, b2Body * bodyB, b2World * world)
 
 Plant::~Plant()
 {
+    //world->DestroyBody(plantHead);
 }
 
 void Plant::checkCollision(Entity * other)

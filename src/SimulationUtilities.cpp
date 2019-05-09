@@ -1,7 +1,7 @@
 #include "SimulationUtilities.h"
 const float SimulationUtilities::TO_PIXELS_SCALING_FACTOR = 30.0f;
 const float SimulationUtilities::TO_METERS_SCALING_FACTOR = 1 / TO_PIXELS_SCALING_FACTOR;
-
+vector<b2Body*>SimulationUtilities::toBeDestroyed;
 vector<string> SimulationUtilities::dreams = { "null", " To be the fifth member of BlackPink", "To have a bookshelf",
     "To have a camera storage room", "To be David Bowie" , "To be an old-town hoe", "To be financially independent","To be able to do a split",
 "To hit all 7 continents by 20", "To be calm perpetually", "To own a stone-casted house with a fireplace, at the north bank of the Mediterranean",
@@ -59,6 +59,11 @@ b2Vec2 SimulationUtilities::metersToPixels(b2Vec2 position)
     yPixels = position.y * TO_PIXELS_SCALING_FACTOR;
     b2Vec2 convertedValues = { xPixels, yPixels };
     return convertedValues;
+}
+
+void SimulationUtilities::addToDestroy(b2Body* body)
+{
+    toBeDestroyed.push_back(body);
 }
 
 float SimulationUtilities::pixelsToMeters(float pixels)

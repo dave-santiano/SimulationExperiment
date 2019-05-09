@@ -21,8 +21,13 @@ public:
     void checkCollision(Entity* other) override;
     void testFoo();
 
+    b2Body* plantHead;
+    vector<b2Body*> plant;
 
 private:
+    b2World* world;
+    b2BodyDef plantHeadDef;
+    b2FixtureDef plantHeadFixtureDef;
     float xSegmentDimension;
     float ySegmentDimension;
 
@@ -43,7 +48,6 @@ private:
 
     ofImage head;
 
-    vector<b2Body*> plant;
     vector<float> sinValues;
     vector<float> cosValues;
 
@@ -58,9 +62,6 @@ private:
     b2BodyDef plantRootDef;
     b2FixtureDef plantRootFixtureDef;
 
-    b2Body* plantHead;
-    b2BodyDef plantHeadDef;
-    b2FixtureDef plantHeadFixtureDef;
 
     b2Body* jointA;
     b2Body* jointB;

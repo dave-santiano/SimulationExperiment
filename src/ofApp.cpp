@@ -8,7 +8,7 @@ void ofApp::setup(){
     ofSetVerticalSync(true);
     ofSetFrameRate(60);
     debugMode = false;
-
+    deleteWorms = false;
     //shader.load("noise.vert", "noise.frag");
     //shader.load("vertex_shader.vert", "frag_shader.frag");
     //fbo.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA);
@@ -93,6 +93,41 @@ void ofApp::worldClock()
 void ofApp::update()
 {
     world->Step(timeStep, velocityIterations, positionIterations);
+    //world->ClearForces();
+    //std::cout << world->IsLocked() << std::endl;
+        //std::cout << world->IsLocked() << std::endl;
+    //if (deleteWorms == true) {
+        //for (int i = 0; i < worms.size(); i++) {
+        //    for (int j = 0; j < worms[i].wormSegments.size(); j++) {
+        //        b2Body* pWorm = worms[i].wormSegments[j];
+        //        world->DestroyBody(pWorm);
+        //    }
+        //    //worms.erase(worm);
+        //    //delete pWorm;
+        //    //worms[i].die();
+        //    //worms.erase(pWorm);
+        //}
+        //worms.clear();
+        //for (int i = 0; i < plants.size(); i++) {
+        //    for (int j = 0; j < plants[i].plant.size(); j++) {
+        //        b2Body* pPlant = plants[i].plant[j];
+        //        world->DestroyBody(pPlant);
+        //    }
+        //    //worms.erase(worm);
+        //    //delete pWorm;
+        //    //worms[i].die();
+        //    //worms.erase(pWorm);
+        //}
+        //plants.clear();
+        for (int i = 0; i < SimulationUtilities::toBeDestroyed.size(); i++) {
+            world->DestroyBody(SimulationUtilities::toBeDestroyed[i]);
+        }
+        SimulationUtilities::toBeDestroyed.clear();
+    //}
+
+    
+    
+
 
     for (int i = 0; i < worms.size(); i++) {
         worms[i].update();
@@ -114,7 +149,10 @@ void ofApp::update()
     }
     for (int i = 0; i < plants.size(); i++) {
         plants[i].update();
+
     }
+
+    world->ClearForces();
 }
 
 //--------------------------------------------------------------
@@ -132,6 +170,7 @@ void ofApp::draw(){
         if (debugMode == true) {
             worms[i].drawDebugInfo();
         }
+
     }
     for (int i = 0; i < rings.size(); i++) {
         rings[i].draw();
@@ -142,6 +181,7 @@ void ofApp::draw(){
     
     for (int i = 0; i < plants.size(); i++) {
         plants[i].draw();
+
     }
     //fbo.end();
     //shader.end();
@@ -234,5 +274,6 @@ void ofApp::keyPressed(int key)
     // if 'i' is pressed, show some info
     if (key == 105) {
         debugMode =  !debugMode;
+        deleteWorms = true;
     }
 }

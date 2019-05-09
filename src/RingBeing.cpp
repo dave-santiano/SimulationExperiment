@@ -1,7 +1,7 @@
 #include "RingBeing.h"
 
 RingBeing::RingBeing() :
-    bodyLength(10),
+    bodyLength(9),
     initPosition(SimulationUtilities::pixelsToMeters(ofRandom(0, ofGetWidth()), ofRandom(0, ofGetHeight()))),
     density(1.0f),
     friction(0.3f)
@@ -109,6 +109,7 @@ void RingBeing::randomBehavior()
         ringHead->ApplyLinearImpulse(b2Vec2(ofRandom(-3, 3), ofRandom(-3, 3)), ringHead->GetWorldCenter(), true);
     }
 }
+
 
 void RingBeing::assignJoints(b2Body* bodyA, b2Body* bodyB, b2World* world)
 {

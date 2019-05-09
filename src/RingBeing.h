@@ -44,6 +44,7 @@ private:
 
     vector<b2Body*> ringSegments;
 
+    //joint pointers for assigning the joints together.
     b2Body* jointA;
     b2Body* jointB;
 
@@ -51,6 +52,10 @@ private:
     b2BodyDef ringBodyDef2;
     b2FixtureDef ringBodyFixtureDef;
     b2FixtureDef ringBodyFixtureDef2;
+
+    b2Body* flagellum;
+    b2BodyDef flageBodyDef;
+    b2FixtureDef flageBodyFixtureDef;
 
     b2BodyDef ringHeadDef;
     b2FixtureDef ringHeadFixtureDef;
